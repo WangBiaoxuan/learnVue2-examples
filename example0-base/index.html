@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!--<div id="editor">
+        <textarea v-bind:value="input" v-on:input="update"></textarea>
+        <div v-html="compiledMarkdown()"></div>
+    </div>-->
+
+    <div id="example">{{message}}</div>
+
+    <script src="http://cdn.bootcss.com/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="http://cdn.bootcss.com/marked/0.3.6/marked.js"></script>
+    <script src="../vue.2.3.0.js"></script>
+    <script>
+        //创建根实例
+        /*new Vue({
+            el: '#editor',
+            data: {
+                input: '# hello'
+            },
+            //计算属性
+            computed: {
+                compiledMarkdown: function () {
+                    console.log('计算属性');
+                    return marked(this.input, { sanitize: true })
+                }
+            },
+            //方法
+            methods: {
+                compiledMarkdown: function () {
+                    console.log('方法');
+                    return marked(this.input, { sanitize: true })
+                },
+                update: _.debounce(function (e) {
+                    this.input = e.target.value
+                }, 300)
+            }
+        })*/
+
+        //异步更新队列
+        var vm = new Vue({
+            el: '#example',
+            data: {
+                message: '123'
+            }
+        });
+        vm.message = 'new message'; // 更改数据
+        console.log(vm.$el.textContent === 'new message'); // false
+        Vue.nextTick(function () {
+            console.log(vm.$el.textContent === 'new message'); // true
+        })
+
+    </script>
+</body>
+</html>
