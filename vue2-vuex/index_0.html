@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="https://unpkg.com/vuex@2.3.1"></script>
+
+<div id="app">
+    <button v-on:click="increment">增加count</button>
+    <button v-on:click="reduce">减少count</button>
+    <h1>{{count}}</h1>
+    <h1>{{constant}}</h1>
+</div>
+<script>
+    console.dir(Vuex);
+    console.dir(Vuex.mapState);
+    const store = new Vuex.Store({
+        state: {
+            count: 0,
+            constant: 10
+        },
+        mutations: {
+            increment (state) {
+                state.count++
+            },
+            reduce (state) {
+                state.count--
+            }
+        }
+    });
+    var app = new Vue({
+        el: '#app',
+        computed: {
+            count: function () {
+                return store.state.count
+            },
+            constant: function () {
+                return store.state.constant;
+            }
+        },
+        /*computed: Vuex.mapState({
+            contant: state => state.contant,
+            count: state => state.count
+        }),*/
+        methods: {
+            increment: function () {
+                store.commit('increment');
+            },
+            reduce: function (){
+                store.commit('reduce');
+            }
+        }
+    })
+</script>
+</body>
+</html>
